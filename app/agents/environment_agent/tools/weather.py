@@ -24,7 +24,6 @@ class SearchWeatherInput(BaseModel):
         pattern=r"^\d{4}-\d{2}-\d{2}$"
     )
 
-
 async def search_weather(location: str, start_date: str, end_date: str) -> list[dict]:
     """
     查询天气信息
