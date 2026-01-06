@@ -16,8 +16,8 @@ async def main():
             url=f"{settings.AMAP_API_BASE}/v5/place/text",
             params={
                 "key":settings.AMAP_API_KEY,
-                "keywords":"网红",
-                "types":"",
+                "keywords":"",
+                "types":"060100",
                 "region":"320583",
                 "citylimit":"true",
                 "show_fields":"business,navi,photos"
@@ -25,7 +25,7 @@ async def main():
         )
         pois = resp.json().get("pois", [])
         for p in pois:
-            print(p["name"])
+            print(p["typecode"])
 
 if __name__ == "__main__":
     asyncio.run(main())

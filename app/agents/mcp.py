@@ -13,7 +13,7 @@ mcp_client: MultiServerMCPClient | None = None
 def create_mcp_client():
     """
     创建MCP客户端
-    :return: MCP客户端
+    :return: None
     """
     global mcp_client
     if mcp_client is not None:
@@ -47,6 +47,10 @@ def fix_tool_schema(tool) -> BaseTool:
 
 
 async def get_xiaohongshu_mcp_tools() -> List[BaseTool]:
+    """
+    获取小红书MCP的工具列表
+    :return: 小红书MCP的工具列表
+    """
     global mcp_client
     # if mcp_client is None:
     #     create_mcp_client()
