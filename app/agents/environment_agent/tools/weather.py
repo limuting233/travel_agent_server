@@ -42,7 +42,7 @@ async def search_weather(location: str, start_date: str, end_date: str) -> list[
             # print(weather)
             # weather_str = f"{location}的天气信息:\n{weather}"
             # print(weather_str)
-            print(weather)
+            # print(weather)
             return weather
             # return weather_str
         except Exception as e:

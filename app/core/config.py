@@ -29,7 +29,10 @@ class Settings(BaseSettings):
     DB_PASSWORD: str  # 数据库密码
     DB_NAME: str  # 数据库名称
     DB_POOL_SIZE: int  # 数据库连接池大小
-    DB_MAX_OVERFLOW: int  # 数据库最大连接数溢出
+    DB_MAX_OVERFLOW: int  # 数据库最大连接数溢出值
+
+    # 小红书 MCP 配置
+    XHS_MCP_URL: str  # 小红书 MCP 接口 URL
 
 
     # 日志配置
