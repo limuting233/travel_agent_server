@@ -28,11 +28,13 @@ class Settings(BaseSettings):
     DB_USER: str  # 数据库用户名
     DB_PASSWORD: str  # 数据库密码
     DB_NAME: str  # 数据库名称
+    DB_POOL_SIZE: int  # 数据库连接池大小
+    DB_MAX_OVERFLOW: int  # 数据库最大连接数溢出
+
 
     # 日志配置
     LOG_LEVEL: str = "INFO"  # 日志级别
     LOG_FORMAT: str = "<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level: <8}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>"  # 日志格式
-
 
     class Config:
         env_file = os.path.join(BASE_DIR, ".env")  # 环境变量文件路径

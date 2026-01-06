@@ -79,7 +79,7 @@ async def get_adcode(location: str, client: httpx.AsyncClient) -> str:
     """
     try:
         resp = await client.get(
-            url=f"{settings.AMAP_API_BASE}/geocode/geo",
+            url=f"{settings.AMAP_API_BASE}/v3/geocode/geo",
             params={
                 "key": settings.AMAP_API_KEY,
                 "address": location,
@@ -108,7 +108,7 @@ async def get_weather(adcode: str, client: httpx.AsyncClient, start_date: str, e
     """
     try:
         resp = await client.get(
-            url=f"{settings.AMAP_API_BASE}/weather/weatherInfo",
+            url=f"{settings.AMAP_API_BASE}/v3/weather/weatherInfo",
             params={
                 "key": settings.AMAP_API_KEY,
                 "city": adcode,
