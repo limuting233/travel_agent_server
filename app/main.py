@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
 from app.agents.graph import build_travel_agent
-from app.agents.mcp import create_xhc_mcp_session
+from app.agents.mcp import create_xhc_mcp_session, create_amap_mcp_session
 from app.api.v1.router import setup_router
 # from app.agents.memory import init_checkpointer, close_checkpointer
 # from app.api.v1.router import api_router
@@ -21,9 +21,11 @@ async def lifespan(app: FastAPI):
     :return: None
     """
     async with create_xhc_mcp_session():
-        yield
-    await build_travel_agent()
+        async with create_amap_mcp_session():
+            await build_travel_agent()
+            yield
 
+    # await build_travel_agent()
 
 
 # def setup_router(app: FastAPI):

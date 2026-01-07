@@ -7,7 +7,7 @@ from langchain_mcp_adapters.tools import load_mcp_tools
 from langchain_openai import ChatOpenAI
 from pydantic import BaseModel, Field
 
-from app.agents.mcp import fix_tool_schema
+from app.agents.mcp import fix_xhs_tool_schema
 from app.agents.resource_agent.prompt import RESOURCE_AGENT_SYSTEM_PROMPT
 from app.agents.resource_agent.tools.poi import search_poi_tool, calculate_poi_count_tool
 from app.core.config import settings
@@ -71,7 +71,7 @@ class ResourceAgentBuilder:
         res_agent_needed_tools = []
         for t in xhs_tools:
             if t.name in ["check_login_status", "search_feeds"]:
-                res_agent_needed_tools.append(fix_tool_schema(t))
+                res_agent_needed_tools.append(fix_xhs_tool_schema(t))
         res_agent = create_agent(
             model=self.llm,
             tools=res_agent_needed_tools + [search_poi_tool, calculate_poi_count_tool],
