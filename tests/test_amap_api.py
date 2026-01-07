@@ -25,7 +25,7 @@ async def main():
         )
         pois = resp.json().get("pois", [])
         for p in pois:
-            print(p["typecode"])
+            print(p)
 
 if __name__ == "__main__":
     asyncio.run(main())
