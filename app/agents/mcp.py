@@ -104,10 +104,6 @@ async def create_amap_mcp_session():
 
         async with mcp_client.session(server_name="amap-maps-streamableHTTP") as session:
 
-            # tools = await load_mcp_tools(session=session)
-            # fixed_tools = [fix_tool_schema(t) for t in tools]
-            # logger.info(f"已加载 {len(fixed_tools)} 个高德地图MCP工具")
-
             try:
                 amap_mcp_session = session
                 logger.info("高德地图MCP会话创建完成")
