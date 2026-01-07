@@ -72,7 +72,7 @@ class ResourceAgentBuilder:
         async with xhs_mcp_session() as (session, xhs_tools):
             res_agent_needed_tools = []
             for t in xhs_tools:
-                if t.name in ["check_login_status", "get_feed_detail", "search_feeds"]:
+                if t.name in ["check_login_status", "search_feeds"]:
                     res_agent_needed_tools.append(t)
 
             yield create_agent(
