@@ -143,12 +143,12 @@ async def calculate_poi_count(days: int) -> int:
     """
     根据旅游天数计算推荐的POI（兴趣点）数量。
 
-    计算规则：每天6个POI + 3个固定POI
+    计算规则：每天4个POI + 3个固定POI
 
-    :param days: 旅游天数（1-30天）
+    :param days: 旅游天数
     :return: 推荐的POI总数量
     """
-    return days * 6 + 3
+    return days * 4 + 3
 
 
 calculate_poi_count_tool = StructuredTool.from_function(
@@ -160,16 +160,16 @@ calculate_poi_count_tool = StructuredTool.from_function(
     功能：根据旅游天数计算行程规划所需的推荐POI（兴趣点）数量。
     
     计算规则：
-    - 公式：天数 × 6 + 3
+    - 公式：天数 × 4 + 3
     
     使用场景：
     - 规划旅游行程前，估算需要收集多少个地点信息
     - 确保行程内容丰富度与天数匹配
     
     示例：
-    - 3天行程 → 21个POI（3×6+3）
-    - 5天行程 → 33个POI（5×6+3）
-    - 7天行程 → 45个POI（7×6+3）
+    - 3天行程 → 15个POI（3×4+3）
+    - 5天行程 → 23个POI（5×4+3）
+    - 7天行程 → 31个POI（7×4+3）
     """,
     args_schema=CalculatePoiCountInput,
     return_direct=False,

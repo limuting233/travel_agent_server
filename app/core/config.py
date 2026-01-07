@@ -33,6 +33,7 @@ class Settings(BaseSettings):
 
     # 小红书 MCP 配置
     XHS_MCP_URL: str  # 小红书 MCP 接口 URL
+    XHS_MCP_TIMEOUT: int  # 小红书 MCP 请求超时时间（秒）
 
 
     # 日志配置

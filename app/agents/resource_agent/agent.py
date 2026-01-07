@@ -1,3 +1,4 @@
+from contextlib import asynccontextmanager
 from typing import List, Literal
 
 from langchain.agents import create_agent
@@ -5,7 +6,7 @@ from langchain.agents.structured_output import ProviderStrategy, ToolStrategy
 from langchain_openai import ChatOpenAI
 from pydantic import BaseModel, Field
 
-from app.agents.mcp import create_mcp_client, get_xiaohongshu_mcp_tools
+from app.agents.mcp import xhs_mcp_session
 from app.agents.resource_agent.prompt import RESOURCE_AGENT_SYSTEM_PROMPT
 from app.agents.resource_agent.tools.poi import search_poi_tool, calculate_poi_count_tool
 from app.core.config import settings
@@ -26,7 +27,9 @@ class Candidate(BaseModel):
     open_time: str = Field(default="", description="营业时间，格式为：HH:mm-HH:mm，例如：09:00-22:00，24小时制",
                            examples=["09:00-22:00"])
     suggested_duration: float | None = Field(default=None, description="建议游玩时间，单位小时", examples=[2])
-    recommend_reason: str = Field(default="", description="融合高德硬指标与小红书软评价的理由", examples=["历史悠久，是中国的重要历史景点"])
+    photo: str = Field(default="", description="地点照片URL，一个就可以", examples=["https://example.com/photo1.jpg"])
+    recommend_reason: str = Field(default="", description="融合高德硬指标与小红书软评价的理由",
+                                  examples=["历史悠久，是中国的重要历史景点"])
 
 
 class ResourceAgentOutput(BaseModel):
@@ -36,6 +39,7 @@ class ResourceAgentOutput(BaseModel):
     candidates: List[Candidate] = Field(description="符合条件的地点列表", examples=[[
         Candidate(id="B0L1KZTJ0T", name="天安门", category="CORE_SIGHTSEEING", tags=["历史", "文化"],
                   location="116.397428,39.90923", rating=4.5, price=100, open_time="09:00-22:00", suggested_duration=2,
+                  photo="https://example.com/photo1.jpg",
                   recommend_reason="历史悠久，是中国的重要历史景点")]])
 
 
@@ -51,6 +55,7 @@ class ResourceAgentBuilder:
             api_key=settings.OPENAI_API_KEY
         )
 
+    @asynccontextmanager
     async def build(self):
         """
         构建ResourceAgent
@@ -58,16 +63,23 @@ class ResourceAgentBuilder:
         """
         # mcp_client = create_mcp_client()
         # tools = await get_mcp_tools()
-        xhs_tools = await get_xiaohongshu_mcp_tools()
-        res_agent_needed_tools = []
-        for t in xhs_tools:
-            if t.name in ["check_login_status", "get_feed_detail", "search_feeds"]:
-                res_agent_needed_tools.append(t)
+        # xhs_tools = await get_xiaohongshu_mcp_tools()
+        # res_agent_needed_tools = []
+        # for t in xhs_tools:
+        #     if t.name in ["check_login_status", "get_feed_detail", "search_feeds"]:
+        #         res_agent_needed_tools.append(t)
+        # session, xhs_tools = xhs_mcp_session().__aenter__()
+        async with xhs_mcp_session() as (session, xhs_tools):
+            res_agent_needed_tools = []
+            for t in xhs_tools:
+                if t.name in ["check_login_status", "get_feed_detail", "search_feeds"]:
+                    res_agent_needed_tools.append(t)
 
-        return create_agent(
-            model=self.llm,
-            tools=res_agent_needed_tools + [search_poi_tool, calculate_poi_count_tool],
-            system_prompt=RESOURCE_AGENT_SYSTEM_PROMPT,
-            response_format=ToolStrategy(ResourceAgentOutput),
-            debug=True,
-        )
+            yield create_agent(
+                model=self.llm,
+                tools=res_agent_needed_tools + [search_poi_tool, calculate_poi_count_tool],
+                system_prompt=RESOURCE_AGENT_SYSTEM_PROMPT,
+                response_format=ToolStrategy(ResourceAgentOutput),
+                debug=True,
+            )
+        # session, tools = xhs_mcp_session()
