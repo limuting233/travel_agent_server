@@ -21,6 +21,8 @@ class Settings(BaseSettings):
     # 高德地图 API 配置
     AMAP_API_BASE: str  # 高德地图 API 基础 URL
     AMAP_API_KEY: str  # 高德地图 API 密钥
+    AMAP_MCP_BASE_URL: str  # 高德地图 MCP 接口基础 URL
+    AMAP_MCP_TIMEOUT: int  # 高德地图 MCP 请求超时时间（秒）
 
     # 数据库配置
     DB_HOST: str  # 数据库主机地址

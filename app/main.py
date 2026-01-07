@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
 from app.agents.graph import build_travel_agent
-from app.agents.mcp import create_mcp_client
+from app.agents.mcp import create_xhc_mcp_session
 from app.api.v1.router import setup_router
 # from app.agents.memory import init_checkpointer, close_checkpointer
 # from app.api.v1.router import api_router
@@ -20,11 +20,10 @@ async def lifespan(app: FastAPI):
     :param app: FastAPI应用实例
     :return: None
     """
-    # await init_checkpointer()
+    async with create_xhc_mcp_session():
+        yield
     await build_travel_agent()
-    # create_mcp_client()
-    yield
-    # await close_checkpointer()
+
 
 
 # def setup_router(app: FastAPI):
@@ -63,9 +62,7 @@ def create_app() -> FastAPI:
     # 注册异常处理器
     register_exception_handlers(app)
 
-
     return app
-
 
 
 app = create_app()
