@@ -26,17 +26,20 @@ class ScheduleItemPlay(BaseModel):
     行程计划项模型（游玩）
     """
     seq: int = Field(description="计划项序号", examples=[1, 2, 3], ge=1)
-    time_window: str = Field(description="活动时间窗口,格式为HH:MM-HH:MM", examples=["08:00-09:00"])
+    time_window: str = Field(
+        description="活动时间窗口,格式为HH:MM-HH:MM", examples=["08:00-09:00"])
     poi_id: str = Field(description="高德地图POI ID", examples=["B0L1KZTJ0T"])
     poi_name: str = Field(description="POI名称", examples=["天安门"])
     category: Literal["CORE_SIGHTSEEING", "LOCAL_GASTRONOMY", "CITY_LEISURE", "ACCOMMODATION"] = Field(
         description="POI分类", examples=["CORE_SIGHTSEEING", "LOCAL_GASTRONOMY", "CITY_LEISURE", "ACCOMMODATION"])
     action: Literal["浏览", "午餐", "休息", "住宿", "晚餐", "早餐", "其他"] = Field(description="活动类型",
-                                                                                    examples=["浏览", "午餐", "休息",
-                                                                                              "住宿", "晚餐", "早餐",
-                                                                                              "其他"])
-    duration_hour: float = Field(description="活动持续时间（小时）", examples=[1.0, 2.0, 3.5], gt=0.0)
-    cost: float | None = Field(default=None, description="活动成本（元）", examples=[0, 10, 20], ge=0.0)
+                                                                      examples=["浏览", "午餐", "休息",
+                                                                                "住宿", "晚餐", "早餐",
+                                                                                "其他"])
+    duration_hour: float = Field(description="活动持续时间（小时）", examples=[
+                                 1.0, 2.0, 3.5], gt=0.0)
+    cost: float | None = Field(
+        default=None, description="活动成本（元）", examples=[0, 10, 20], ge=0.0)
     reason: str = Field(description="活动原因", examples=["历史悠久，是中国的重要历史景点"])
 
 
@@ -45,12 +48,16 @@ class ScheduleItemCommute(BaseModel):
     行程计划项模型（通勤）
     """
     seq: int = Field(description="计划项序号", examples=[1, 2, 3], ge=1)
-    time_window: str = Field(description="通勤时间窗口,格式为HH:MM-HH:MM", examples=["12:00-13:00"])
-    action: Literal["commute"] = Field(description="action的值只可以是commute", examples=["commute"])
+    time_window: str = Field(
+        description="通勤时间窗口,格式为HH:MM-HH:MM", examples=["12:00-13:00"])
+    action: Literal["commute"] = Field(
+        description="action的值只可以是commute", examples=["commute"])
     transport_mode: Literal["bicycling", "driving", "transit_integrated", "walking"] = Field(
         description="通勤方式", examples=["bicycling", "driving", "transit_integrated", "walking"])
-    distance_meter: float = Field(description="通勤距离（米）", examples=[1000, 2000, 300.5], gt=0.0)
-    travel_time_min: int = Field(description="通勤持续时间（分钟）", examples=[10, 20, 30], gt=0)
+    distance_meter: float = Field(description="通勤距离（米）", examples=[
+                                  1000, 2000, 300.5], gt=0.0)
+    travel_time_min: int = Field(
+        description="通勤持续时间（分钟）", examples=[10, 20, 30], gt=0)
     from_poi: str = Field(description="出发POI 名称", examples=["天安门"])
     to_poi: str = Field(description="到达POI 名称", examples=["故宫"])
 
