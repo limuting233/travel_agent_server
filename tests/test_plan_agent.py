@@ -52,13 +52,14 @@ async def main():
              "recommend_reason": "高德评分4.8，小红书好评多，推荐创意中餐体验。"}
         ]
     }
-    str = json.dumps(data,ensure_ascii=False)
+    data_str = json.dumps(data, ensure_ascii=False)
     async with create_amap_mcp_session():
         agent = await PlannerAgentBuilder().build()
         resp = await agent.ainvoke({
-            "messages": [HumanMessage(content=f"候选poi:{str}。一天的上海旅游，天气为晴天，偏好美食")]
+            "messages": [HumanMessage(content=f"候选poi:{data_str}。一天的上海旅游，天气为晴天，偏好美食")]
         })
-        print(resp)
+        print("resp[structured_response]:\n")
+        print(resp["structured_response"])
         # async with ResourceAgentBuilder().build() as res_agent:
         #     resp = await res_agent.ainvoke({
         #         "messages": [HumanMessage(content="去上海旅游一天，都为晴天，我想要吃上海的美食")]
