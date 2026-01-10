@@ -1,7 +1,9 @@
 from fastapi import APIRouter
 
 from loguru import logger
+from fastapi.responses import StreamingResponse
 
+from app.core.stream_utils import sse_generator
 from app.schemas.request.travel import PlanTravelRequest
 from app.services.travel import TravelService
 
@@ -18,4 +20,7 @@ async def plan_travel(request: PlanTravelRequest):
     logger.info(f"[旅行规划接口] 请求参数: {request}")
 
     travel_service = TravelService()
-    await travel_service.plan_travel(request)
+    return StreamingResponse(
+        content=sse_generator(travel_service.plan_travel(request)),
+        media_type="text/event-stream"
+    )

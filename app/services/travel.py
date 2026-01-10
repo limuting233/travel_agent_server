@@ -5,10 +5,13 @@ import httpx
 from langchain_core.messages import SystemMessage
 
 from app.agents.context import TravelAgentContext
-from app.agents.graph import travel_agent
+
 from app.core.config import settings
 from app.schemas.request.travel import PlanTravelRequest
 from loguru import logger
+import time
+
+from app.schemas.response.stream import StreamResponse, StartEvent, LoadingEvent, StepEvent, MessageEvent, DoneEvent
 
 
 class TravelService:
@@ -28,8 +31,17 @@ class TravelService:
         end_date = request.end_date if request.end_date else None  # 计划结束日期
         preferences = request.preferences if request.preferences else None  # 用户偏好
 
-        thread_id = f"thread_{uuid.uuid4()}"
-
+        thread_id = f"thread_{str(uuid.uuid4()).replace('-', '')}"
+        logger.info(f"本次旅游规划thread_id: {thread_id}")
+        yield StreamResponse(
+            event="start",
+            data=StartEvent(session_id=thread_id, start_at=int(time.time())),
+        )
+        yield StreamResponse(
+            event="loading",
+            data=LoadingEvent(loading_at=int(time.time())),
+        )
+        from app.agents.graph import travel_agent
         async for chunk in travel_agent.astream(
                 {
                     "messages": [SystemMessage(content="开始规划")],
@@ -45,4 +57,32 @@ class TravelService:
                                            preferences=preferences.split(",") if preferences else None,
                                            start_date=start_date, end_date=end_date)
         ):
-            print(chunk)
+            # print(f"chunk: {chunk}")
+            # chunk 格式: {"node_name": {state_update}}
+            for node_name, state_update in chunk.items():
+                # 打印节点名称和状态更新
+                logger.info(f"当前node: {node_name}, 更新的state: {state_update}")
+                if node_name == "manager_agent_node":
+                    next_phase = state_update["next_phase"]  # 下一个阶段
+                    if next_phase == "finish":
+                        # 规划完成
+                        logger.info("规划完成")
+
+                        # 获取规划结果
+                        final_output = state_update["messages"][-1].content
+                        logger.info(f"规划结果: {final_output}")
+                        for c in final_output:
+                            yield StreamResponse(
+                                event="message",
+                                data=MessageEvent(
+                                    content=c
+                                ),
+                            )
+                        yield StreamResponse(
+                            event="done",
+                            data=DoneEvent(
+                                usage={"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0},
+                                session_id=thread_id,
+                                end_at=int(time.time()),
+                            ),
+                        )
