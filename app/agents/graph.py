@@ -115,6 +115,7 @@ def _build_initial_message(context: TravelAgentContext) -> str:
     """
     location = context["location"]
     days = context["days"]
+    today = context.get("today", None)
     start_date = context.get("start_date", None)
     end_date = context.get("end_date", None)
     preferences = context.get("preferences", None)
@@ -124,6 +125,8 @@ def _build_initial_message(context: TravelAgentContext) -> str:
         parts.append(f"游玩时间是从{start_date}到{end_date}")
     if preferences:
         parts.append(f"用户的旅游偏好是{"、".join(preferences)}")
+    if today:
+        parts.append(f"当前日期是{today}")
 
     return ", ".join(parts) + "。" + "请根据用户的旅游信息和偏好，制定一个旅游计划。"
 
