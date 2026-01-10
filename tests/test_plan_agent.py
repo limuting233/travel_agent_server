@@ -60,6 +60,7 @@ async def main():
         })
         print("resp[structured_response]:\n")
         print(resp["structured_response"])
+        # print(resp)
         # async with ResourceAgentBuilder().build() as res_agent:
         #     resp = await res_agent.ainvoke({
         #         "messages": [HumanMessage(content="去上海旅游一天，都为晴天，我想要吃上海的美食")]
