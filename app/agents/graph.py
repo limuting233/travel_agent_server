@@ -278,7 +278,7 @@ async def planner_agent_node(state: TravelAgentState, runtime: Runtime[TravelAge
                 "messages": [SystemMessage(content=msg)]
             }
         )
-        res = resp["structured_response"].model_dump_jspn()
+        res = resp["structured_response"].model_dump_json()
         return {
             "current_phase": "planner_agent",
             "next_phase": "manager_agent",
