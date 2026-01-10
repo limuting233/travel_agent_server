@@ -4,6 +4,7 @@ from typing import List, Literal
 from langchain.agents import create_agent
 from langchain.agents.structured_output import ProviderStrategy, ToolStrategy
 from langchain_mcp_adapters.tools import load_mcp_tools
+from langchain_ollama import ChatOllama
 from langchain_openai import ChatOpenAI
 from pydantic import BaseModel, Field
 
@@ -26,9 +27,10 @@ class Candidate(BaseModel):
     rating: float | None = Field(default=None, description="地点评分", examples=[4.5])
     price: float | None = Field(default=None, description="人均消费，单位：元/人", examples=[100])
     open_time: str = Field(
-        default="", 
+        default="",
         description="营业时间，24小时制。支持三种格式：1)单时段：HH:mm-HH:mm；2)多时段用逗号分隔：HH:mm-HH:mm,HH:mm-HH:mm；3)区分工作日/休息日用分号分隔：工作日HH:mm-HH:mm;休息日HH:mm-HH:mm",
-        examples=["09:00-22:00", "09:00-14:00,16:00-20:00", "工作日09:00-14:00,16:00-20:00;休息日09:00-14:00,16:00-24:00"]
+        examples=["09:00-22:00", "09:00-14:00,16:00-20:00",
+                  "工作日09:00-14:00,16:00-20:00;休息日09:00-14:00,16:00-24:00"]
     )
     suggested_duration: float | None = Field(default=None, description="建议游玩时间，单位小时", examples=[2])
     photo: str = Field(default="", description="地点照片URL，一个就可以", examples=["https://example.com/photo1.jpg"])
@@ -53,10 +55,15 @@ class ResourceAgentBuilder:
     """
 
     def __init__(self):
-        self.llm = ChatOpenAI(
-            model="gpt-4.1-mini",
-            base_url=settings.OPENAI_API_BASE,
-            api_key=settings.OPENAI_API_KEY
+        # self.llm = ChatOpenAI(
+        #     model="gpt-4.1-mini",
+        #     base_url=settings.OPENAI_API_BASE,
+        #     api_key=settings.OPENAI_API_KEY
+        # )
+        self.llm = ChatOllama(
+            model="qwen3:8b",
+            # base_url=settings.OLLAMA_API_BASE,
+
         )
 
     # @asynccontextmanager

@@ -18,6 +18,10 @@ class Settings(BaseSettings):
     OPENAI_API_BASE: str  # OpenAI API 基础 URL
     OPENAI_API_KEY: str  # OpenAI API 密钥
 
+    # Ollama API 配置
+    OLLAMA_API_BASE: str  # Ollama API 基础 URL
+    OLLAMA_API_KEY: str  # Ollama API 密钥
+
     # 高德地图 API 配置
     AMAP_API_BASE: str  # 高德地图 API 基础 URL
     AMAP_API_KEY: str  # 高德地图 API 密钥
@@ -36,7 +40,6 @@ class Settings(BaseSettings):
     # 小红书 MCP 配置
     XHS_MCP_URL: str  # 小红书 MCP 接口 URL
     XHS_MCP_TIMEOUT: int  # 小红书 MCP 请求超时时间（秒）
-
 
     # 日志配置
     LOG_LEVEL: str = "INFO"  # 日志级别

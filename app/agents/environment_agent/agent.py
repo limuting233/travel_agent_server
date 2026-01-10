@@ -1,4 +1,5 @@
 from langchain.agents import create_agent
+from langchain_ollama import ChatOllama
 from langchain_openai import ChatOpenAI
 
 from app.agents.environment_agent.prompt import ENVIRONMENT_AGENT_SYSTEM_PROMPT
@@ -12,8 +13,13 @@ class EnvironmentAgentBuilder:
     """
 
     def __init__(self):
-        self.llm = ChatOpenAI(
-            model="gpt-4.1-mini", base_url=settings.OPENAI_API_BASE, api_key=settings.OPENAI_API_KEY)
+        self.llm = ChatOllama(
+            model="qwen3:8b",
+            # base_url=settings.OLLAMA_API_BASE,
+
+        )
+        # self.llm = ChatOpenAI(
+        #     model="gpt-4.1-mini", base_url=settings.OPENAI_API_BASE, api_key=settings.OPENAI_API_KEY)
 
     def build(self):
         """

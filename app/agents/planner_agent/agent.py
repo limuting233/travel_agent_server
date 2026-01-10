@@ -4,6 +4,7 @@ from typing import Literal
 from langchain.agents import create_agent
 from langchain.agents.structured_output import ToolStrategy
 from langchain_mcp_adapters.tools import load_mcp_tools
+from langchain_ollama import ChatOllama
 from langchain_openai import ChatOpenAI
 from pydantic import BaseModel, Field
 
@@ -87,8 +88,13 @@ class PlannerAgentBuilder:
     """
 
     def __init__(self):
-        self.llm = ChatOpenAI(
-            model="gpt-4.1-mini", base_url=settings.OPENAI_API_BASE, api_key=settings.OPENAI_API_KEY)
+        self.llm = ChatOllama(
+            model="qwen3:8b",
+            # base_url=settings.OLLAMA_API_BASE,
+
+        )
+        # self.llm = ChatOpenAI(
+        #     model="gpt-4.1-mini", base_url=settings.OPENAI_API_BASE, api_key=settings.OPENAI_API_KEY)
 
     async def build(self):
         """
