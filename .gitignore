@@ -4,7 +4,12 @@
 __pycache__/
 
 
-.env
+.env.dev
+.env.test
+
+.dockerignore
+
+test/
 
 Dockerfile
 docker-compose.yml

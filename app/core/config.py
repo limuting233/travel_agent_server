@@ -18,9 +18,9 @@ class Settings(BaseSettings):
     OPENAI_API_BASE: str  # OpenAI API 基础 URL
     OPENAI_API_KEY: str  # OpenAI API 密钥
 
-    # Ollama API 配置
-    OLLAMA_API_BASE: str  # Ollama API 基础 URL
-    OLLAMA_API_KEY: str  # Ollama API 密钥
+    # # Ollama API 配置
+    # OLLAMA_API_BASE: str  # Ollama API 基础 URL
+    # OLLAMA_API_KEY: str  # Ollama API 密钥
 
     # 高德地图 API 配置
     AMAP_API_BASE: str  # 高德地图 API 基础 URL
@@ -42,11 +42,12 @@ class Settings(BaseSettings):
     XHS_MCP_TIMEOUT: int  # 小红书 MCP 请求超时时间（秒）
 
     # 日志配置
-    LOG_LEVEL: str = "INFO"  # 日志级别
+    LOG_LEVEL: str  # 日志级别
     LOG_FORMAT: str = "<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level: <8}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>"  # 日志格式
 
     class Config:
-        env_file = os.path.join(BASE_DIR, ".env")  # 环境变量文件路径
+        env = os.getenv("ENV", "dev")
+        env_file = os.path.join(BASE_DIR, f".env.{env}")  # 环境变量文件路径
         case_sensitive = True  # 环境变量名称大小写敏感
         env_file_encoding = "utf-8"  # 环境变量文件编码
         extra = "ignore"  # 忽略额外的环境变量
