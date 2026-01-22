@@ -88,13 +88,13 @@ class PlannerAgentBuilder:
     """
 
     def __init__(self):
-        # self.llm = ChatOllama(
-        #     model="qwen3:8b",
-        #     # base_url=settings.OLLAMA_API_BASE,
-        #
-        # )
-        self.llm = ChatOpenAI(
-            model="gpt-4.1-mini", base_url=settings.OPENAI_API_BASE, api_key=settings.OPENAI_API_KEY)
+        self.llm = ChatOllama(
+            model="qwen3:8b",
+            # base_url=settings.OLLAMA_API_BASE,
+
+        )
+        # self.llm = ChatOpenAI(
+        #     model="gpt-4.1-mini", base_url=settings.OPENAI_API_BASE, api_key=settings.OPENAI_API_KEY)
 
     async def build(self):
         """
@@ -114,3 +114,7 @@ class PlannerAgentBuilder:
             response_format=ToolStrategy(PlannerAgentOutput),
             debug=True,
         )
+
+        # return create_agent(
+        #     model=self.llm
+        # )

@@ -119,7 +119,7 @@ def _build_initial_message(context: TravelAgentContext) -> str:
     start_date = context.get("start_date", None)
     end_date = context.get("end_date", None)
     preferences = context.get("preferences", None)
-
+    # 用户想去上海游玩3天，游玩时间是从2026-01-11到2026-01-13，用户的旅游偏好是历史、文化，当前日期是2026-01-11。请根据用户的旅游信息和偏好，制定一个旅游计划。
     parts = [f"用户想去{location}游玩{days}天"]
     if start_date and end_date:
         parts.append(f"游玩时间是从{start_date}到{end_date}")

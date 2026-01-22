@@ -7,6 +7,7 @@ from langchain_openai import ChatOpenAI
 from pydantic import BaseModel, Field
 
 from app.agents.manager_agent.prompt import MANAGER_AGENT_SYSTEM_PROMPT
+from app.agents.manager_agent.tools import is_need_search_weather_tool
 from app.core.config import settings
 
 
@@ -30,7 +31,7 @@ class ManagerAgentBuilder:
     def build(self):
         return create_agent(
             model=self.llm,
-            tools=[],
+            tools=[is_need_search_weather_tool],
             system_prompt=MANAGER_AGENT_SYSTEM_PROMPT,
             response_format=ToolStrategy(ManagerAgentOutput),
             debug=True,

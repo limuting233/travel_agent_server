@@ -1,3 +1,4 @@
+import asyncio
 import uuid
 from datetime import date
 
@@ -11,7 +12,7 @@ from app.schemas.request.travel import PlanTravelRequest
 from loguru import logger
 import time
 
-from app.schemas.response.stream import StreamResponse, StartEvent, LoadingEvent, StepEvent, MessageEvent, DoneEvent
+from app.schemas.response.stream import StreamResponse, StartEvent, LoadingEvent, MessageEvent, DoneEvent
 
 
 class TravelService:
@@ -35,7 +36,7 @@ class TravelService:
         logger.info(f"本次旅游规划thread_id: {thread_id}")
         yield StreamResponse(
             event="start",
-            data=StartEvent(session_id=thread_id, start_at=int(time.time())),
+            data=StartEvent(thread_id=thread_id, start_at=int(time.time())),
         )
         yield StreamResponse(
             event="loading",
@@ -66,11 +67,12 @@ class TravelService:
                     next_phase = state_update["next_phase"]  # 下一个阶段
                     if next_phase == "finish":
                         # 规划完成
-                        logger.info("规划完成")
+                        logger.info("本轮规划完成")
 
                         # 获取规划结果
                         final_output = state_update["messages"][-1].content
                         logger.info(f"规划结果: {final_output}")
+                        # 分批返回规划结果
                         for c in final_output:
                             yield StreamResponse(
                                 event="message",
@@ -78,11 +80,16 @@ class TravelService:
                                     content=c
                                 ),
                             )
+
+                            await asyncio.sleep(0.05)  # 等待0.05s
+
                         yield StreamResponse(
                             event="done",
                             data=DoneEvent(
-                                usage={"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0},
-                                session_id=thread_id,
+                                # usage={"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0},
+                                thread_id=thread_id,
                                 end_at=int(time.time()),
                             ),
                         )
+
+                        # todo 规划完成后需要加本次规划结果存放进数据库
