@@ -20,4 +20,4 @@ async def sse_generator(generator: AsyncGenerator[BaseModel | dict | str, None])
 
             yield f"event: {event}\ndata: {data.model_dump_json()}\n\n"
     except Exception as e:
-        logger.error(f"[sse_generator] 异常: {str(e)}")
+        logger.exception(f"[sse_generator] 异常: {str(e)}")

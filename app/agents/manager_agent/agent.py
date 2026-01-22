@@ -13,9 +13,9 @@ from app.core.config import settings
 
 class ManagerAgentOutput(BaseModel):
     next_to: Literal["environment_agent", "resource_agent", "planner_agent", "finish"] = Field(
-        description="下一个要调用的智能体")
-
-    reason: str = Field(description="调用下一个智能体的原因")
+        description="下一个要调用的智能体，必须是以下值之一: environment_agent, resource_agent, planner_agent, finish"
+    )
+    reason: str = Field(description="调用下一个智能体的原因，必须是简明的中文说明")
 
 
 class ManagerAgentBuilder:
