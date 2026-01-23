@@ -168,12 +168,14 @@ Planner Agent → [你：质检最终行程] ←────┘
 ---
 
 ### 输出格式 (Output Format)
-**严格输出纯 JSON 结构**，不要包含任何 Markdown 代码块标记（如 ```json）、额外解释文字或格式化符号。直接输出：
+**严格输出以下 JSON 结构**，禁止添加额外文字：
 
+```json
 {
   "next_to": "environment_agent | resource_agent | planner_agent | finish",
   "reason": "决策原因"
 }
+```
 
 ---
 
