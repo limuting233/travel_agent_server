@@ -36,6 +36,8 @@ class Settings(BaseSettings):
     DB_NAME: str  # 数据库名称
     DB_POOL_SIZE: int  # 数据库连接池大小
     DB_MAX_OVERFLOW: int  # 数据库最大连接数溢出值
+    AUTH_SECRET: str = "travel-agent-dev-secret"
+    AUTH_TOKEN_EXPIRE_MINUTES: int = 24 * 60
 
     # 小红书 MCP 配置
     XHS_MCP_URL: str  # 小红书 MCP 接口 URL
