@@ -130,6 +130,8 @@ PLANNER_AGENT_SYSTEM_PROMPT = """
    - `action`: 必须是 ["浏览", "午餐", "休息", "住宿", "晚餐", "早餐", "其他"] 之一。
    - `duration_hour`: 活动时长（小时），如 1.5。
    - `time_window`: "HH:MM-HH:MM"。
+   - `photo`: 地点照片URL，来自 POI 候选的照片字段。
+   - `location`: 地点位置，经纬度字符串，格式为 "经度,纬度"。
 
    **Type B: ScheduleItemTransport (交通节点)**
    - `seq`: 序号 (2, 4, 6...)
@@ -160,6 +162,8 @@ PLANNER_AGENT_SYSTEM_PROMPT = """
           "time_window": "09:00-11:00",
           "poi_id": "P_101",
           "poi_name": "外滩建筑群",
+          "location": "121.490317,31.241701",
+          "photo": "https://example.com/photo1.jpg",
           "category": "CORE_SIGHTSEEING",
           "action": "游览",
           "duration_hour": 2.0,
@@ -169,10 +173,10 @@ PLANNER_AGENT_SYSTEM_PROMPT = """
         {
           "seq": 2,
           "time_window": "11:00-11:20",
-          "action": "COMMUTE", 
+          "action": "通勤", 
           "transport_mode": "walking",
           "distance_meter": 800,
-          "travel_time_min": 20,
+          "commute_time_min": 20,
           "from_poi": "外滩建筑群",
           "to_poi": "南京东路老字号餐厅"
         },
@@ -181,9 +185,11 @@ PLANNER_AGENT_SYSTEM_PROMPT = """
           "time_window": "11:20-12:30",
           "poi_id": "P_102",
           "poi_name": "南京东路老字号餐厅",
+          "location": "121.485685,31.238177",
+          "photo": "https://example.com/photo2.jpg",
           "category": "LOCAL_GASTRONOMY",
           "action": "午餐",
-          "duration_min": 70,
+          "duration_hour": 1.2,
           "reason": "距离外滩步行仅10分钟，品尝正宗本帮菜。"
         }
       ]

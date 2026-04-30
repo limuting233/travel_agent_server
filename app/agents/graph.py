@@ -41,6 +41,7 @@ async def manager_agent_node(state: TravelAgentState, runtime: Runtime[TravelAge
                 "messages": [SystemMessage(content=first_msg)]
             }
         )
+        # structured_resp = ManagerAgentOutput.parse_response(resp)
         return {
             "current_phase": "manager_agent",
             "next_phase": resp["structured_response"].next_to,
@@ -63,6 +64,8 @@ async def manager_agent_node(state: TravelAgentState, runtime: Runtime[TravelAge
                 "messages": [SystemMessage(content=msg)]
             }
         )
+        resp = ManagerAgentOutput.parse_response(resp)
+        # structured_resp = ManagerAgentOutput.parse_response(resp)
         return {
             "current_phase": "manager_agent",
             "next_phase": resp["structured_response"].next_to,

@@ -1,5 +1,5 @@
 from contextlib import asynccontextmanager
-from typing import List, Literal
+from typing import List, Literal, Any
 
 from langchain.agents import create_agent
 from langchain.agents.structured_output import ProviderStrategy, ToolStrategy
@@ -48,6 +48,18 @@ class ResourceAgentOutput(BaseModel):
                   photo="https://example.com/photo1.jpg",
                   recommend_reason="历史悠久，是中国的重要历史景点")]])
 
+    # @classmethod
+    # def parse_response(cls, resp: dict[str, Any]) -> "ResourceAgentOutput":
+    #     """
+    #     解析ResourceAgent的响应，将其转换为ResourceAgentOutput模型
+    #     :param resp: ResourceAgent的响应，包含结构化输出字段
+    #     :return: ResourceAgentOutput模型实例
+    #     """
+    #     if "structured_response" in resp and resp["structured_response"]:
+    #         return resp["structured_response"]
+    #
+    #     last_msg = resp["messages"][-1].content
+
 
 class ResourceAgentBuilder:
     """
@@ -55,16 +67,17 @@ class ResourceAgentBuilder:
     """
 
     def __init__(self):
-        # self.llm = ChatOpenAI(
-        #     model="gpt-4.1-mini",
-        #     base_url=settings.OPENAI_API_BASE,
-        #     api_key=settings.OPENAI_API_KEY
-        # )
-        self.llm = ChatOllama(
-            model="qwen3:8b",
-            # base_url=settings.OLLAMA_API_BASE,
-
+        self.llm = ChatOpenAI(
+            model="gpt-4.1-mini",
+            base_url=settings.OPENAI_API_BASE,
+            api_key=settings.OPENAI_API_KEY
         )
+        # self.llm = ChatOllama(
+        #     model="qwen3:8b",
+        #     num_ctx=40960,
+        #     # base_url=settings.OLLAMA_API_BASE,
+        #
+        # )
 
     # @asynccontextmanager
     async def build(self):
