@@ -153,7 +153,8 @@ Authorization: Bearer <access_token>
     "error_message": null,
     "data": {
         "id": "usr_01HZX...",
-        "username": "user001"
+        "username": "user001",
+        "nickname": "旅行者"  // 新增一个字段，用于显示用户昵称，注册的时候后端给这个字段一个默认值
         // 其他用户信息字段
         // ...
     }
