@@ -387,7 +387,6 @@ Authorization: Bearer <access_token>
         "latest_version": {
             "version_no": 1,
             "source": "initial",
-            "quality_score": 86,
             "content": {
                 "trip_overview": {
                     "title": "上海3日美食文化游",
