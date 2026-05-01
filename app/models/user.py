@@ -1,7 +1,7 @@
 import uuid
 from datetime import datetime
 
-from sqlalchemy import DateTime, String, func
+from sqlalchemy import DateTime, String, func, text
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.models.base import Base
@@ -27,6 +27,13 @@ class User(Base):
         index=True,
         nullable=False,
         comment="用户名",
+    )
+    nickname: Mapped[str] = mapped_column(
+        String(50),
+        nullable=False,
+        default="旅行者",
+        server_default=text("'旅行者'"),
+        comment="用户昵称",
     )
     password_hash: Mapped[str] = mapped_column(
         String(255),

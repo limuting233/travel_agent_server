@@ -15,6 +15,11 @@ def _b64url_encode(raw: bytes) -> str:
     return base64.urlsafe_b64encode(raw).rstrip(b"=").decode("utf-8")
 
 
+def _b64url_decode(raw: str) -> bytes:
+    padding = "=" * (-len(raw) % 4)
+    return base64.urlsafe_b64decode(f"{raw}{padding}".encode("utf-8"))
+
+
 def hash_password(password: str) -> str:
     salt = secrets.token_hex(16)
     digest = hashlib.pbkdf2_hmac(
@@ -70,3 +75,31 @@ def create_access_token(user_id: str, username: str) -> dict:
         "token_type": "bearer",
         "expires_at": payload["exp"],
     }
+
+
+def decode_access_token(access_token: str) -> dict:
+    try:
+        payload_b64, signature_b64 = access_token.split(".", maxsplit=1)
+    except ValueError as exc:
+        raise ValueError("invalid access token format") from exc
+
+    expected_signature = hmac.new(
+        settings.AUTH_SECRET.encode("utf-8"),
+        payload_b64.encode("utf-8"),
+        hashlib.sha256,
+    ).digest()
+    actual_signature = _b64url_decode(signature_b64)
+    if not hmac.compare_digest(expected_signature, actual_signature):
+        raise ValueError("invalid access token signature")
+
+    payload = json.loads(_b64url_decode(payload_b64).decode("utf-8"))
+    exp = payload.get("exp")
+    sub = payload.get("sub")
+    username = payload.get("username")
+    if not isinstance(exp, int) or not isinstance(sub, str) or not isinstance(username, str):
+        raise ValueError("invalid access token payload")
+
+    if exp <= int(datetime.now(timezone.utc).timestamp()):
+        raise ValueError("access token expired")
+
+    return payload

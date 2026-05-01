@@ -153,9 +153,8 @@ Authorization: Bearer <access_token>
     "error_message": null,
     "data": {
         "id": "usr_01HZX...",
-        "username": "user001"
-        // 其他用户信息字段
-        // ...
+        "username": "user001",
+        "nickname": "旅行者"
     }
 }
 ```

@@ -16,3 +16,4 @@ class StatusInfo(Enum):
     LOGIN_INVALID_LENGTH = (200, 20002, "用户名或密码须为5-12位")
     LOGIN_INVALID_CREDENTIALS = (200, 20003, "用户名或密码错误")
     REGISTER_USERNAME_EXISTS = (200, 20004, "用户名已存在")
+    AUTH_REQUIRED = (401, 20401, "未登录或 token 无效")

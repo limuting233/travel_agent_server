@@ -49,13 +49,12 @@ class ManagerAgentOutput(BaseModel):
 
 class ManagerAgentBuilder:
     def __init__(self):
-        # self.llm = ChatOllama(
-        #     model="qwen3:8b",
-        #     # base_url=settings.OLLAMA_API_BASE,
-        #
-        # )
+        # 初始化deepseek模型
         self.llm = ChatOpenAI(
-            model="gpt-4.1-mini", base_url=settings.OPENAI_API_BASE, api_key=settings.OPENAI_API_KEY)
+            model=settings.DEEPSEEK_API_MODEL, 
+            base_url=settings.DEEPSEEK_API_BASE, 
+            api_key=settings.DEEPSEEK_API_KEY,
+            extra_body={"thinking": {"type": "disabled"}})
 
     def build(self):
         return create_agent(
