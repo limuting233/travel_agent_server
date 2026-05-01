@@ -5,6 +5,7 @@ __pycache__/
 
 
 .env.dev
+
 .env.test
 
 .dockerignore
@@ -13,3 +14,5 @@ test/
 
 Dockerfile
 docker-compose.yml
+
+.venv/
