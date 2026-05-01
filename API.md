@@ -155,6 +155,8 @@ Authorization: Bearer <access_token>
         "id": "usr_01HZX...",
         "username": "user001",
         "nickname": "旅行者"
+        // 其他用户信息字段
+        // ...
     }
 }
 ```
@@ -385,14 +387,149 @@ Authorization: Bearer <access_token>
         "latest_version": {
             "version_no": 1,
             "source": "initial",
-            "quality_score": 86,
             "content": {
                 "trip_overview": {
                     "title": "上海3日美食文化游",
                     "total_distance_km": 42.6,
                     "tags": ["美食", "历史", "小众探索"]
                 },
-                "daily_itinerary": []
+                "daily_itinerary": [
+                    {
+                        "day": 1,
+                        "date": "2026-05-01",
+                        "weather_label": "OUTDOOR_PREFERRED",
+                        "schedule": [
+                            {
+                                "seq": 1,
+                                "time_window": "09:00-11:00",
+                                "poi_id": "B0xxx001",
+                                "poi_name": "外滩",
+                                "category": "CORE_SIGHTSEEING",
+                                "action": "浏览",
+                                "duration_hour": 2,
+                                "cost": 0,
+                                "reason": "天气适合户外活动，外滩适合作为第一站建立城市印象",
+                                "photo": "https://example.com/waitan.jpg",
+                                "location": "121.490317,31.241701"
+                            },
+                            {
+                                "seq": 2,
+                                "time_window": "11:00-11:20",
+                                "action": "通勤",
+                                "transport_mode": "walking",
+                                "distance_meter": 800,
+                                "commute_time_min": 20,
+                                "from_poi": "外滩",
+                                "to_poi": "南京东路"
+                            },
+                            {
+                                "seq": 3,
+                                "time_window": "11:20-12:40",
+                                "poi_id": "B0xxx002",
+                                "poi_name": "南京东路本帮菜餐厅",
+                                "category": "LOCAL_GASTRONOMY",
+                                "action": "午餐",
+                                "duration_hour": 1.3,
+                                "cost": 120,
+                                "reason": "距离上一站近，适合在核心商圈安排午餐，减少绕路",
+                                "photo": "https://example.com/restaurant.jpg",
+                                "location": "121.485685,31.238177"
+                            },
+                            {
+                                "seq": 4,
+                                "time_window": "12:40-13:10",
+                                "action": "通勤",
+                                "transport_mode": "transit_integrated",
+                                "distance_meter": 5200,
+                                "commute_time_min": 30,
+                                "from_poi": "南京东路本帮菜餐厅",
+                                "to_poi": "上海博物馆"
+                            },
+                            {
+                                "seq": 5,
+                                "time_window": "13:10-15:10",
+                                "poi_id": "B0xxx003",
+                                "poi_name": "上海博物馆",
+                                "category": "CORE_SIGHTSEEING",
+                                "action": "浏览",
+                                "duration_hour": 2,
+                                "cost": 0,
+                                "reason": "符合历史文化偏好，且下午安排室内参观可以降低体力消耗",
+                                "photo": "https://example.com/museum.jpg",
+                                "location": "121.470972,31.228809"
+                            },
+                            {
+                                "seq": 6,
+                                "time_window": "15:10-15:30",
+                                "action": "通勤",
+                                "transport_mode": "walking",
+                                "distance_meter": 900,
+                                "commute_time_min": 20,
+                                "from_poi": "上海博物馆",
+                                "to_poi": "人民广场"
+                            },
+                            {
+                                "seq": 7,
+                                "time_window": "15:30-17:30",
+                                "poi_id": "B0xxx004",
+                                "poi_name": "人民广场",
+                                "category": "CITY_LEISURE",
+                                "action": "浏览",
+                                "duration_hour": 2,
+                                "cost": 0,
+                                "reason": "与上海博物馆距离近，适合作为下午轻松步行和城市休闲节点",
+                                "photo": "https://example.com/renminguangchang.jpg",
+                                "location": "121.475190,31.228833"
+                            },
+                            {
+                                "seq": 8,
+                                "time_window": "17:30-18:00",
+                                "action": "通勤",
+                                "transport_mode": "walking",
+                                "distance_meter": 1100,
+                                "commute_time_min": 30,
+                                "from_poi": "人民广场",
+                                "to_poi": "淮海路餐厅"
+                            },
+                            {
+                                "seq": 9,
+                                "time_window": "18:00-19:30",
+                                "poi_id": "B0xxx005",
+                                "poi_name": "淮海路餐厅",
+                                "category": "LOCAL_GASTRONOMY",
+                                "action": "晚餐",
+                                "duration_hour": 1.5,
+                                "cost": 160,
+                                "reason": "晚餐安排在商圈附近，方便餐后继续休闲或返回酒店",
+                                "photo": "https://example.com/dinner.jpg",
+                                "location": "121.468000,31.222000"
+                            },
+                            {
+                                "seq": 10,
+                                "time_window": "19:30-20:00",
+                                "action": "通勤",
+                                "transport_mode": "driving",
+                                "distance_meter": 4500,
+                                "commute_time_min": 30,
+                                "from_poi": "淮海路餐厅",
+                                "to_poi": "上海市中心酒店"
+                            },
+                            {
+                                "seq": 11,
+                                "time_window": "20:00-21:00",
+                                "poi_id": "B0xxx006",
+                                "poi_name": "上海市中心酒店",
+                                "category": "ACCOMMODATION",
+                                "action": "住宿",
+                                "duration_hour": 1,
+                                "cost": 500,
+                                "reason": "办理入住并休整，酒店靠近核心城区，便于第二天继续游览",
+                                "photo": "https://example.com/hotel.jpg",
+                                "location": "121.473000,31.230000"
+                            }
+                        ]
+                    }
+                ]
             },
             "created_at": 1770000060
         },
@@ -532,8 +669,43 @@ Authorization: Bearer <access_token>
         "revision_instruction": "第二天不要安排博物馆，换成小众街区和咖啡馆",
         "quality_score": 88,
         "content": {
-            "trip_overview": {},
-            "daily_itinerary": []
+            "trip_overview": {
+                "title": "上海3日美食文化游",
+                "total_distance_km": 39.8,
+                "tags": ["美食", "历史", "小众探索"]
+            },
+            "daily_itinerary": [
+                {
+                    "day": 1,
+                    "date": "2026-05-01",
+                    "weather_label": "OUTDOOR_PREFERRED",
+                    "schedule": [
+                        {
+                            "seq": 1,
+                            "time_window": "09:00-11:00",
+                            "poi_id": "B0xxx001",
+                            "poi_name": "外滩",
+                            "category": "CORE_SIGHTSEEING",
+                            "action": "浏览",
+                            "duration_hour": 2,
+                            "cost": 0,
+                            "reason": "天气适合户外活动，外滩适合作为第一站建立城市印象",
+                            "photo": "https://example.com/waitan.jpg",
+                            "location": "121.490317,31.241701"
+                        },
+                        {
+                            "seq": 2,
+                            "time_window": "11:00-11:20",
+                            "action": "通勤",
+                            "transport_mode": "walking",
+                            "distance_meter": 800,
+                            "commute_time_min": 20,
+                            "from_poi": "外滩",
+                            "to_poi": "南京东路"
+                        }
+                    ]
+                }
+            ]
         },
         "created_at": 1770000300
     }
@@ -690,7 +862,31 @@ Authorization: Bearer <access_token>
     "day": 1,
     "date": "2026-05-01",
     "weather_label": "OUTDOOR_PREFERRED",
-    "schedule": []
+    "schedule": [
+        {
+            "seq": 1,
+            "time_window": "09:00-11:00",
+            "poi_id": "B0xxx001",
+            "poi_name": "外滩",
+            "category": "CORE_SIGHTSEEING",
+            "action": "浏览",
+            "duration_hour": 2,
+            "cost": 0,
+            "reason": "天气适合户外活动，外滩适合作为第一站建立城市印象",
+            "photo": "https://example.com/waitan.jpg",
+            "location": "121.490317,31.241701"
+        },
+        {
+            "seq": 2,
+            "time_window": "11:00-11:20",
+            "action": "通勤",
+            "transport_mode": "walking",
+            "distance_meter": 800,
+            "commute_time_min": 20,
+            "from_poi": "外滩",
+            "to_poi": "南京东路"
+        }
+    ]
 }
 ```
 
@@ -723,8 +919,6 @@ Authorization: Bearer <access_token>
     "distance_meter": 800,
     "commute_time_min": 20,
     "from_poi": "外滩",
-    "to_poi": "南京东路",
+    "to_poi": "南京东路"
 }
 ```
-
-
