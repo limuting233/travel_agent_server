@@ -633,14 +633,12 @@ Authorization: Bearer <access_token>
                 "version_no": 1,
                 "source": "initial",
                 "revision_instruction": null,
-                "quality_score": 86,
                 "created_at": 1770000060
             },
             {
                 "version_no": 2,
                 "source": "revision",
                 "revision_instruction": "第二天不要安排博物馆，换成小众街区和咖啡馆",
-                "quality_score": 88,
                 "created_at": 1770000300
             }
         ]
@@ -667,7 +665,6 @@ Authorization: Bearer <access_token>
         "version_no": 2,
         "source": "revision",
         "revision_instruction": "第二天不要安排博物馆，换成小众街区和咖啡馆",
-        "quality_score": 88,
         "content": {
             "trip_overview": {
                 "title": "上海3日美食文化游",
